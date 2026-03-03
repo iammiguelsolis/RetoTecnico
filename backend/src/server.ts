@@ -2,7 +2,7 @@ import express, { Application, Router } from 'express';
 import cors from 'cors';
 import { errorHandler } from './middlewares';
 
-// Factory
+// Factory (mantiene JSON + MySQL)
 import { RepositoryFactory } from './data/ExpenseRepositoryFactory';
 
 // Servicios
@@ -23,6 +23,13 @@ import { ExpenseFilterContext } from './patterns/strategy/ExpenseFilterContext';
 // Rutas
 import { createAuthRoutes } from './routes/authRoutes';
 import { createExpenseRoutes } from './routes/expenseRoutes';
+
+/**
+ * createServer
+ *
+ * Inyección de dependencias vía RepositoryFactory:
+ *   STORAGE_TYPE (json|mysql) → Repos → Services → Controllers → Routes
+ */
 export const createServer = (): Application => {
   const app: Application = express();
 
@@ -65,7 +72,7 @@ export const createServer = (): Application => {
 
   app.use('/api', apiRouter);
 
-  // Error handler
+  // Error handler (siempre al final)
   app.use(errorHandler);
 
   return app;

@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import { createServer } from './server';
 
+// Carga las variables de entorno desde .env
 dotenv.config();
 
 const PORT = process.env['PORT'] ?? 3000;
