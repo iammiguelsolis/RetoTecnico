@@ -1,0 +1,11 @@
+[
+  {
+    "id": "6474365c-6955-46ab-9072-ff18d1f815e5",
+    "name": "Miguel Solis",
+    "email": "miguel@gmail.com",
+    "passwordHash": "$2b$12$mYZFR2EW52aghVeGjtcwFOHF9wUYJr69Y8ER98kBdELPN1BGsNCJy",
+    "monthlyBudget": 5000,
+    "createdAt": "2026-03-03T20:17:44.774Z",
+    "updatedAt": "2026-03-03T20:17:44.774Z"
+  }
+]

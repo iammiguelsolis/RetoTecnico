@@ -1,0 +1,61 @@
+[
+  {
+    "id": "ef2901b1-75cd-4906-af69-4889349cc87d",
+    "title": "Almuerzo oficina",
+    "reason": "Comida del equipo",
+    "date": "2026-03-02T12:00:00.000Z",
+    "amount": 45.5,
+    "createdAt": "2026-03-02T21:05:33.462Z",
+    "updatedAt": "2026-03-02T21:05:33.462Z"
+  },
+  {
+    "id": "b2cfefaa-061e-41a7-a60b-4b6c33f32e12",
+    "title": "Almuerzo equipo",
+    "reason": "Comida del equipo de desarrollo",
+    "date": "2026-03-02T00:00:00.000Z",
+    "amount": 75,
+    "createdAt": "2026-03-02T21:25:25.139Z",
+    "updatedAt": "2026-03-02T21:25:53.318Z"
+  },
+  {
+    "id": "05f3d7d7-e2f0-4230-bb4e-3d161c7006ee",
+    "title": "dsadas",
+    "reason": "dasdas",
+    "date": "2026-03-03T00:00:00.000Z",
+    "amount": 0.02,
+    "createdAt": "2026-03-02T22:10:02.190Z",
+    "updatedAt": "2026-03-02T22:10:02.190Z"
+  },
+  {
+    "id": "84ac7c49-ed34-4b05-ad19-b21df7d05311",
+    "userId": "6474365c-6955-46ab-9072-ff18d1f815e5",
+    "title": "dsadasd",
+    "reason": "sadasdas",
+    "date": "2026-03-04T00:00:00.000Z",
+    "amount": 0.04,
+    "type": "EXPENSE",
+    "priorityLevel": "LOW",
+    "reminderDate": null,
+    "isRecurring": false,
+    "frequency": null,
+    "interval": 1,
+    "createdAt": "2026-03-03T20:17:51.495Z",
+    "updatedAt": "2026-03-03T20:17:51.495Z"
+  },
+  {
+    "id": "1fcc9a76-64fe-4e85-82f1-b3294f7141c0",
+    "userId": "6474365c-6955-46ab-9072-ff18d1f815e5",
+    "title": "XDASDASDAS",
+    "reason": "DASDSA",
+    "date": "2026-03-11T00:00:00.000Z",
+    "amount": 200,
+    "type": "INCOME",
+    "priorityLevel": "MEDIUM",
+    "reminderDate": null,
+    "isRecurring": true,
+    "frequency": null,
+    "interval": 1,
+    "createdAt": "2026-03-03T20:18:00.770Z",
+    "updatedAt": "2026-03-03T20:18:00.770Z"
+  }
+]
