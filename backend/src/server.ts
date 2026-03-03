@@ -1,6 +1,8 @@
 import express, { Application, Router } from 'express';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
 import { errorHandler } from './middlewares';
+import { swaggerSpec } from './swagger';
 
 // Selecciona el repositorio concreto (JSON o MySQL) según variable de entorno
 import { RepositoryFactory } from './data/ExpenseRepositoryFactory';
@@ -59,6 +61,9 @@ export const createServer = (): Application => {
   apiRouter.use('/expenses', createExpenseRoutes(expenseController));
 
   app.use('/api', apiRouter);
+
+  // Documentación interactiva disponible en /api/docs
+  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
   // El middleware de errores siempre va al final
   app.use(errorHandler);
