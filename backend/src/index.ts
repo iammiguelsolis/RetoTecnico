@@ -1,0 +1,1 @@
+console.log("Iniciando la API de Gestión de Gastos...");
