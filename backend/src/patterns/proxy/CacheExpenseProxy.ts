@@ -2,11 +2,11 @@ import { IExpenseRepository } from '../../repository/interfaces/IExpenseReposito
 import { IExpense, CreateExpenseDTO, UpdateExpenseDTO } from '../../models/Expense';
 
 /**
- * Patrón Proxy / Decorator:
- * Intercepta llamadas al repositorio base para cachear resultados (O(1)) o invalidar.
+ * Proxy que envuelve el repositorio base para cachear resultados en memoria.
+ * Las operaciones de escritura invalidan la cache del usuario afectado.
  */
 export class CacheExpenseProxy implements IExpenseRepository {
-  // Caché en memoria: Llave = "userId-year-month", Valor = IExpense[]
+  // Cache en memoria: clave = "userId-year-month"
   private monthCache: Map<string, IExpense[]> = new Map();
 
   constructor(private readonly baseRepository: IExpenseRepository) { }
@@ -14,19 +14,14 @@ export class CacheExpenseProxy implements IExpenseRepository {
   async findByMonth(userId: string, year: number, month: number): Promise<IExpense[]> {
     const cacheKey = `${userId}-${year}-${month}`;
 
-    // 1. Verificamos el Hash Map (Proxy Intercept)
+    // Si hay datos en cache, retornarlos directamente
     if (this.monthCache.has(cacheKey)) {
-      console.log(`⚡ [CACHE HIT] Datos O(1) cargados para ${cacheKey}`);
       return this.monthCache.get(cacheKey)!;
     }
 
-    // 2. Fallback al repositorio base (MySQL / JSON)
-    console.log(`⏳ [CACHE MISS] Consultando base de datos para ${cacheKey}`);
+    // Consultar el repositorio base y guardar el resultado en cache
     const data = await this.baseRepository.findByMonth(userId, year, month);
-
-    // 3. Guardamos en el Map para futuras peticiones
     this.monthCache.set(cacheKey, data);
-
     return data;
   }
 
@@ -44,9 +39,7 @@ export class CacheExpenseProxy implements IExpenseRepository {
   }
 
   async delete(id: string): Promise<boolean> {
-    // Si borramos un gasto, necesitamos limpiar la caché del usuario.
-    // Como el ID de gasto no incluye el userID, por simplicidad en el Proxy 
-    // invalidamos la caché completa, o mejor aún, leemos el gasto primero:
+    // Obtener el gasto antes de eliminar para saber a qué usuario invalida
     const existing = await this.baseRepository.findById(id);
     if (existing) {
       this.invalidateCache(existing.userId);
@@ -54,7 +47,6 @@ export class CacheExpenseProxy implements IExpenseRepository {
     return this.baseRepository.delete(id);
   }
 
-  // Operaciones directas (podrían cachearse también si se quisiera)
   async findAll(userId: string): Promise<IExpense[]> {
     return this.baseRepository.findAll(userId);
   }
@@ -67,7 +59,6 @@ export class CacheExpenseProxy implements IExpenseRepository {
     for (const key of this.monthCache.keys()) {
       if (key.startsWith(userId)) {
         this.monthCache.delete(key);
-        console.log(`🗑️ [CACHE INVAL] Llave eliminada: ${key}`);
       }
     }
   }

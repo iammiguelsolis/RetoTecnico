@@ -5,11 +5,8 @@ import { IExpense, CreateExpenseDTO, UpdateExpenseDTO, PriorityLevel } from '../
 import { IExpenseRepository } from '../repository/interfaces/IExpenseRepository';
 
 /**
- * JsonExpenseRepository — v2
- *
- * Persistencia en archivo JSON local.
- * Actualizado para soportar userId, priorityLevel y reminderDate.
- * ⚠️ ESTE ARCHIVO NO DEBE SER ELIMINADO.
+ * Implementación del repositorio de gastos usando un archivo JSON local.
+ * Si el archivo no existe, se crea automáticamente al primer acceso.
  */
 export class JsonExpenseRepository implements IExpenseRepository {
   private readonly filePath: string;
@@ -51,9 +48,7 @@ export class JsonExpenseRepository implements IExpenseRepository {
     return 'LOW';
   }
 
-  // ──────────────────────────────────────────────
   // Implementación de IExpenseRepository
-  // ──────────────────────────────────────────────
 
   async findAll(userId: string): Promise<IExpense[]> {
     const expenses = await this.readFile();

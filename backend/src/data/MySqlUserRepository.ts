@@ -39,7 +39,7 @@ export class MySqlUserRepository implements IUserRepository {
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     `);
     this.initialized = true;
-    console.log('✅ Tabla "users" verificada/creada');
+    console.log('Tabla "users" verificada/creada');
   }
 
   private mapRow(row: UserRow): IUser {

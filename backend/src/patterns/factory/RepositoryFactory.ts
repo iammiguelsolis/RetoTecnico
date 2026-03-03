@@ -14,15 +14,15 @@ export class RepositoryFactory {
 
       if (dbType.toLowerCase() === 'mysql') {
         baseRepository = new MySqlExpenseRepository();
-        console.log('🏭 [Factory] Instanciado MySqlExpenseRepository');
+        console.log('Repositorio: MySQL');
       } else {
         baseRepository = new JsonExpenseRepository();
-        console.log('🏭 [Factory] Instanciado JsonExpenseRepository');
+        console.log('Repositorio: JSON local');
       }
 
       // Envolvemos el repositorio base con el Proxy de Caché
       this.instance = new CacheExpenseProxy(baseRepository);
-      console.log('🛡️  [Proxy] Caché activada sobre el repositorio base');
+      console.log('Cache activada sobre el repositorio base');
     }
 
     return this.instance;

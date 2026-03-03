@@ -76,7 +76,7 @@ export class MySqlExpenseRepository implements IExpenseRepository {
       await this.pool.execute("ALTER TABLE expenses ADD COLUMN updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP");
     }
     this.initialized = true;
-    console.log('✅ Tabla "expenses" verificada/creada en MySQL');
+    console.log('Tabla "expenses" verificada/creada en MySQL');
   }
 
   private autoPriority(amount: number): PriorityLevel {

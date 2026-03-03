@@ -5,7 +5,7 @@ import { AutocompleteTrie } from '../../structures/Trie';
 import { IExpense, CreateExpenseDTO } from '../../models/Expense';
 import { NotFoundError } from '../../errors/NotFoundError';
 
-// ── Mocks ────────────────────────────────────────────────────────────────────
+// Mocks
 
 const mockRepository: jest.Mocked<IExpenseRepository> = {
   findAll: jest.fn(),
@@ -27,7 +27,7 @@ const mockTrie: jest.Mocked<AutocompleteTrie> = {
   suggest: jest.fn(),
 } as any;
 
-// ── Fixture ──────────────────────────────────────────────────────────────────
+// Fixture de prueba
 
 const mockExpense: IExpense = {
   id: 'exp-1',
@@ -46,8 +46,6 @@ const mockExpense: IExpense = {
   updatedAt: '2026-03-01T10:00:00.000Z',
 };
 
-// ── Suite ────────────────────────────────────────────────────────────────────
-
 describe('ExpenseService', () => {
   let expenseService: ExpenseService;
 
@@ -55,8 +53,6 @@ describe('ExpenseService', () => {
     jest.clearAllMocks();
     expenseService = new ExpenseService(mockRepository, mockSubject, mockTrie);
   });
-
-  // ── createExpense ──────────────────────────────────────────────────────────
 
   describe('createExpense', () => {
     it('should persist the expense, notify observers and update the Trie', async () => {
@@ -80,8 +76,6 @@ describe('ExpenseService', () => {
     });
   });
 
-  // ── deleteExpense ──────────────────────────────────────────────────────────
-
   describe('deleteExpense', () => {
     it('should resolve when the expense exists', async () => {
       mockRepository.delete.mockResolvedValue(true);
@@ -100,8 +94,6 @@ describe('ExpenseService', () => {
       expect(mockRepository.delete).toHaveBeenCalledWith('non-existent');
     });
   });
-
-  // ── updateExpense ──────────────────────────────────────────────────────────
 
   describe('updateExpense', () => {
     it('should return the updated expense when it exists', async () => {
@@ -125,8 +117,6 @@ describe('ExpenseService', () => {
     });
   });
 
-  // ── getAllExpenses ──────────────────────────────────────────────────────────
-
   describe('getAllExpenses', () => {
     it('should return all expenses for the given user', async () => {
       const list: IExpense[] = [mockExpense, { ...mockExpense, id: 'exp-2', title: 'Transporte' }];
@@ -148,8 +138,6 @@ describe('ExpenseService', () => {
       expect(mockRepository.findAll).toHaveBeenCalledWith('user-1');
     });
   });
-
-  // ── getExpensesByMonth ─────────────────────────────────────────────────────
 
   describe('getExpensesByMonth', () => {
     it('should return expenses matching the given year and month', async () => {

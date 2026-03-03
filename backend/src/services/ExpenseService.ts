@@ -5,8 +5,8 @@ import { ExpenseSubject } from '../patterns/observer/ExpenseSubject';
 import { AutocompleteTrie } from '../structures/Trie';
 
 /**
- * ExpenseService — Lógica de negocio para gastos.
- * Todos los métodos reciben userId para aislamiento.
+ * Servicio de lógica de negocio para gastos.
+ * Cada método recibe userId para aislar los datos por usuario.
  */
 export class ExpenseService {
   constructor(
@@ -26,10 +26,10 @@ export class ExpenseService {
   async createExpense(userId: string, data: CreateExpenseDTO): Promise<IExpense> {
     const expense = await this.expenseRepository.create(userId, data);
 
-    // 🔔 Disparar evento Observer si es de alta prioridad u otros casos
+    // Notificar observers (ej. alerta de alta prioridad)
     this.expenseSubject.notify(expense);
 
-    // 🌳 Alimentar el Trie para sugerencias futuras
+    // Registrar el título en el Trie para autocompletado
     this.autocompleteTrie.insert(expense.title);
 
     return expense;

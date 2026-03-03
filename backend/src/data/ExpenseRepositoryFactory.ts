@@ -10,11 +10,9 @@ type StorageType = 'json' | 'mysql';
 /**
  * RepositoryFactory
  *
- * Patrón Factory que instancia los repositorios correctos
- * basándose en la variable de entorno STORAGE_TYPE.
- *
- * ⚠️ AMBAS implementaciones (JSON y MySQL) se mantienen siempre.
- * Cambiar entre ellas es cuestión de modificar .env.
+ * Instancia los repositorios correctos segun la variable de entorno STORAGE_TYPE.
+ * Ambas implementaciones (JSON y MySQL) se mantienen en el codigo.
+ * Para cambiar entre ellas basta con modificar el valor en .env.
  */
 export class RepositoryFactory {
   private static getStorageType(): StorageType {
@@ -25,10 +23,10 @@ export class RepositoryFactory {
     const type = this.getStorageType();
     switch (type) {
       case 'json':
-        console.log('📁 Gastos: Archivo JSON local');
+        console.log('Gastos: archivo JSON local');
         return new JsonExpenseRepository();
       case 'mysql':
-        console.log('🗄️  Gastos: MySQL');
+        console.log('Gastos: MySQL');
         return new MySqlExpenseRepository();
       default:
         throw new Error(`STORAGE_TYPE "${type}" no soportado`);
@@ -39,10 +37,10 @@ export class RepositoryFactory {
     const type = this.getStorageType();
     switch (type) {
       case 'json':
-        console.log('📁 Usuarios: Archivo JSON local');
+        console.log('Usuarios: archivo JSON local');
         return new JsonUserRepository();
       case 'mysql':
-        console.log('🗄️  Usuarios: MySQL');
+        console.log('Usuarios: MySQL');
         return new MySqlUserRepository();
       default:
         throw new Error(`STORAGE_TYPE "${type}" no soportado`);
