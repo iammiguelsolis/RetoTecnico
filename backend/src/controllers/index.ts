@@ -1,0 +1,1 @@
+export { ExpenseController } from './ExpenseController';
