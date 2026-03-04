@@ -5,8 +5,6 @@ dotenv.config();
 
 const app = createServer();
 
-// En Vercel (serverless), solo exportamos la app.
-// En local (desarrollo), levantamos el servidor con listen().
 if (process.env['VERCEL'] !== '1') {
   const PORT = process.env['PORT'] ?? 3000;
   app.listen(PORT, () => {
@@ -16,5 +14,4 @@ if (process.env['VERCEL'] !== '1') {
   });
 }
 
-// Vercel necesita este export para funcionar como serverless function
 export default app;
