@@ -58,8 +58,10 @@ export const createServer = (): Application => {
 
   app.use('/api', apiRouter);
 
-  // Documentación interactiva disponible en /api/docs
-  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  // Documentación interactiva disponible en /api/docs (solo en desarrollo)
+  if (process.env['NODE_ENV'] !== 'production') {
+    app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  }
 
   // El middleware de errores siempre va al final
   app.use(errorHandler);
