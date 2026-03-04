@@ -20,7 +20,6 @@ export class RepositoryFactory {
         console.log('Repositorio: JSON local');
       }
 
-      // Envolvemos el repositorio base con el Proxy de Caché
       this.instance = new CacheExpenseProxy(baseRepository);
       console.log('Cache activada sobre el repositorio base');
     }
