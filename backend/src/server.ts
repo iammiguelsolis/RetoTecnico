@@ -23,9 +23,17 @@ import { ExpenseFilterContext } from './patterns/strategy/ExpenseFilterContext';
 export const createServer = (): Application => {
   const app: Application = express();
 
-  app.use(cors({ origin: true, credentials: true }));
+  // Manejo explícito de preflight CORS para Vercel
+  app.options('*', (_req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.status(200).end();
+  });
+
+  app.use(cors({ origin: '*', credentials: false }));
   app.use(express.json());
-  app.use(express.urlencoded({ extended: true })); // ejemplo nombre=Juan&apellido=Perez&edad=25
+  app.use(express.urlencoded({ extended: true }));
 
   // Repositorios
   const userRepository = RepositoryFactory.createUserRepository();
