@@ -1,6 +1,3 @@
-// Factory
-export { RepositoryFactory } from './factory/RepositoryFactory';
-
 // Observer
 export { ExpenseSubject } from './observer/ExpenseSubject';
 export { HighPriorityAlertObserver } from './observer/HighPriorityAlertObserver';
