@@ -23,7 +23,7 @@ import { ExpenseFilterContext } from './patterns/strategy/ExpenseFilterContext';
 export const createServer = (): Application => {
   const app: Application = express();
 
-  app.use(cors());
+  app.use(cors({ origin: true, credentials: true }));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true })); // ejemplo nombre=Juan&apellido=Perez&edad=25
 
