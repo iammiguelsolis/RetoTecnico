@@ -11,7 +11,7 @@ type StorageType = 'json' | 'mysql';
  * RepositoryFactory
  *
  * Instancia los repositorios correctos segun la variable de entorno STORAGE_TYPE.
- * Ambas implementaciones (JSON y MySQL) se mantienen en el codigo.
+ * Ambas implementaciones (JSON y MySQL).
  * Para cambiar entre ellas basta con modificar el valor en .env.
  */
 export class RepositoryFactory {

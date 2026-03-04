@@ -4,7 +4,6 @@ import swaggerUi from 'swagger-ui-express';
 import { errorHandler } from './middlewares';
 import { swaggerSpec } from './swagger';
 
-// Selecciona el repositorio concreto (JSON o MySQL) según variable de entorno
 import { RepositoryFactory } from './data/ExpenseRepositoryFactory';
 
 import { AuthService } from './services/AuthService';
@@ -19,6 +18,7 @@ import { AutocompleteTrie } from './structures/Trie';
 import { ExpenseFilterContext } from './patterns/strategy/ExpenseFilterContext';
 import { createAuthRoutes } from './routes/authRoutes';
 import { createExpenseRoutes } from './routes/expenseRoutes';
+import { WhatsAppObserver } from './patterns/observer/WhatsAppObserver';
 
 /**
  * Configura y retorna la aplicación Express con todos los middlewares,
@@ -29,16 +29,17 @@ export const createServer = (): Application => {
 
   app.use(cors());
   app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
+  app.use(express.urlencoded({ extended: true })); // ejemplo nombre=Juan&apellido=Perez&edad=25
 
   // Repositorios
   const userRepository = RepositoryFactory.createUserRepository();
   const baseExpenseRepository = RepositoryFactory.createExpenseRepository();
-  const cachedExpenseRepository = new CacheExpenseProxy(baseExpenseRepository);
+  const cachedExpenseRepository = new CacheExpenseProxy(baseExpenseRepository); //Ahorro de recursos
 
   // Observer para alertas de gastos de alta prioridad
   const expenseSubject = new ExpenseSubject();
   expenseSubject.attach(new HighPriorityAlertObserver());
+  expenseSubject.attach(new WhatsAppObserver());  
 
   const filterContext = new ExpenseFilterContext();
   const autocompleteTrie = new AutocompleteTrie();
