@@ -4,10 +4,6 @@ import crypto from 'crypto';
 import { IExpense, CreateExpenseDTO, UpdateExpenseDTO, PriorityLevel } from '../models/Expense';
 import { IExpenseRepository } from '../repository/interfaces/IExpenseRepository';
 
-/**
- * Implementación del repositorio de gastos usando un archivo JSON local.
- * Si el archivo no existe, se crea automáticamente al primer acceso.
- */
 export class JsonExpenseRepository implements IExpenseRepository {
   private readonly filePath: string;
 
@@ -39,16 +35,11 @@ export class JsonExpenseRepository implements IExpenseRepository {
     await fs.mkdir(dir, { recursive: true });
   }
 
-  /**
-   * Auto-calcula prioridad basada en monto si no se especifica.
-   */
   private autoPriority(amount: number): PriorityLevel {
     if (amount >= 500) return 'HIGH';
     if (amount >= 100) return 'MEDIUM';
     return 'LOW';
   }
-
-  // Implementación de IExpenseRepository
 
   async findAll(userId: string): Promise<IExpense[]> {
     const expenses = await this.readFile();

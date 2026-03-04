@@ -7,13 +7,6 @@ import { MySqlUserRepository } from './MySqlUserRepository';
 
 type StorageType = 'json' | 'mysql';
 
-/**
- * RepositoryFactory
- *
- * Instancia los repositorios correctos segun la variable de entorno STORAGE_TYPE.
- * Ambas implementaciones (JSON y MySQL).
- * Para cambiar entre ellas basta con modificar el valor en .env.
- */
 export class RepositoryFactory {
   private static getStorageType(): StorageType {
     return (process.env['STORAGE_TYPE'] ?? 'json') as StorageType;

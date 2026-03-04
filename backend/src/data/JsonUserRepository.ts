@@ -4,11 +4,6 @@ import crypto from 'crypto';
 import { IUser, RegisterDTO } from '../models/User';
 import { IUserRepository } from '../repository/interfaces/IUserRepository';
 
-/**
- * JsonUserRepository
- *
- * Persistencia de usuarios en archivo JSON local.
- */
 export class JsonUserRepository implements IUserRepository {
   private readonly filePath: string;
 
