@@ -1,10 +1,5 @@
 import { IExpense, CreateExpenseDTO, UpdateExpenseDTO } from '../../models/Expense';
 
-/**
- * IExpenseRepository — v2
- *
- * Ahora soporta userId para aislar gastos por usuario.
- */
 export interface IExpenseRepository {
   findAll(userId: string): Promise<IExpense[]>;
   findById(id: string): Promise<IExpense | null>;
