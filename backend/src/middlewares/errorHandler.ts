@@ -1,12 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { AppError } from '../errors/AppError';
 
-/**
- * Middleware global de manejo de errores.
- *
- * Captura cualquier error lanzado en la cadena de middleware/rutas
- * y responde con una estructura JSON consistente.
- */
 export const errorHandler = (
   err: Error,
   _req: Request,
