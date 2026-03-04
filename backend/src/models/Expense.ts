@@ -1,12 +1,3 @@
-/**
- * Modelo de Gasto (Expense) — Versión 2
- *
- * Nuevos campos:
- * - userId: vincula al dueño
- * - priorityLevel: escala semáforo (LOW/MEDIUM/HIGH)
- * - reminderDate: recordatorio opcional
- */
-
 export type PriorityLevel = 'LOW' | 'MEDIUM' | 'HIGH';
 export type TransactionType = 'INCOME' | 'EXPENSE';
 export type RecurrenceFrequency = 'DAILY' | 'WEEKLY' | 'MONTHLY' | 'YEARLY';
@@ -28,7 +19,6 @@ export interface IExpense {
   updatedAt: string;         // ISO 8601
 }
 
-/** DTO para crear un nuevo gasto */
 export interface CreateExpenseDTO {
   title: string;
   reason: string;
@@ -42,5 +32,4 @@ export interface CreateExpenseDTO {
   interval?: number;
 }
 
-/** DTO para actualizar un gasto existente */
 export type UpdateExpenseDTO = Partial<CreateExpenseDTO>;
