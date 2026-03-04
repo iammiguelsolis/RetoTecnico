@@ -6,10 +6,6 @@ import { AppError } from '../errors';
 
 const SALT_ROUNDS = 12;
 
-/**
- * AuthService — Lógica de negocio para autenticación.
- * Hashea passwords con bcrypt, genera JWT.
- */
 export class AuthService {
   constructor(private readonly userRepository: IUserRepository) { }
 

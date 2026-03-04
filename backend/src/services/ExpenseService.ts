@@ -3,10 +3,6 @@ import { IExpenseRepository } from '../repository/interfaces/IExpenseRepository'
 import { NotFoundError } from '../errors/NotFoundError';
 import { ExpenseSubject } from '../patterns/observer/ExpenseSubject';
 
-/**
- * Servicio de lógica de negocio para gastos.
- * Cada método recibe userId para aislar los datos por usuario.
- */
 export class ExpenseService {
   constructor(
     private readonly expenseRepository: IExpenseRepository,
@@ -24,7 +20,6 @@ export class ExpenseService {
   async createExpense(userId: string, data: CreateExpenseDTO): Promise<IExpense> {
     const expense = await this.expenseRepository.create(userId, data);
 
-    // Notificar observers (ej. alerta de alta prioridad)
     this.expenseSubject.notify(expense);
 
     return expense;
