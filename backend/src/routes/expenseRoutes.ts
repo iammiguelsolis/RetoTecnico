@@ -4,7 +4,6 @@ import { authMiddleware } from '../middlewares/authMiddleware';
 
 export const createExpenseRoutes = (controller: ExpenseController): Router => {
   const router = Router();
-  // Todas protegidas con JWT
   router.use(authMiddleware);
   router.get('/', controller.getAll);
   router.get('/month/:year/:month', controller.getByMonth);
