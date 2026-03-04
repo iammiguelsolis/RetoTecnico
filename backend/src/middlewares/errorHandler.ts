@@ -7,7 +7,6 @@ export const errorHandler = (
   res: Response,
   _next: NextFunction
 ): void => {
-  // Si es un error operacional conocido (AppError)
   if (err instanceof AppError) {
     res.status(err.statusCode).json({
       status: 'error',
@@ -17,7 +16,6 @@ export const errorHandler = (
     return;
   }
 
-  // Error inesperado (bug, error del sistema, etc.)
   console.error('[ERROR INESPERADO]:', err);
 
   res.status(500).json({
