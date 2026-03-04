@@ -14,7 +14,6 @@ import { ExpenseController } from './controllers/ExpenseController';
 import { CacheExpenseProxy } from './patterns/proxy/CacheExpenseProxy';
 import { ExpenseSubject } from './patterns/observer/ExpenseSubject';
 import { HighPriorityAlertObserver } from './patterns/observer/HighPriorityAlertObserver';
-import { AutocompleteTrie } from './structures/Trie';
 import { ExpenseFilterContext } from './patterns/strategy/ExpenseFilterContext';
 import { createAuthRoutes } from './routes/authRoutes';
 import { createExpenseRoutes } from './routes/expenseRoutes';
@@ -39,17 +38,16 @@ export const createServer = (): Application => {
   // Observer para alertas de gastos de alta prioridad
   const expenseSubject = new ExpenseSubject();
   expenseSubject.attach(new HighPriorityAlertObserver());
-  expenseSubject.attach(new WhatsAppObserver());  
+  expenseSubject.attach(new WhatsAppObserver());
 
   const filterContext = new ExpenseFilterContext();
-  const autocompleteTrie = new AutocompleteTrie();
 
   // Servicios y controladores
   const authService = new AuthService(userRepository);
-  const expenseService = new ExpenseService(cachedExpenseRepository, expenseSubject, autocompleteTrie);
+  const expenseService = new ExpenseService(cachedExpenseRepository, expenseSubject);
 
   const authController = new AuthController(authService);
-  const expenseController = new ExpenseController(expenseService, filterContext, autocompleteTrie);
+  const expenseController = new ExpenseController(expenseService, filterContext);
 
   // Rutas
   const apiRouter = Router();

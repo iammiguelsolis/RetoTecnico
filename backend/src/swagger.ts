@@ -205,32 +205,6 @@ const options: swaggerJsdoc.Options = {
           },
         },
       },
-      '/expenses/suggest': {
-        get: {
-          tags: ['Gastos'],
-          summary: 'Autocompletar títulos de gastos',
-          security: [{ bearerAuth: [] }],
-          parameters: [
-            { name: 'q', in: 'query', required: true, schema: { type: 'string', example: 'Alm' }, description: 'Prefijo de búsqueda' },
-          ],
-          responses: {
-            200: {
-              description: 'Lista de sugerencias',
-              content: {
-                'application/json': {
-                  schema: {
-                    type: 'object',
-                    properties: {
-                      status: { type: 'string', example: 'success' },
-                      data: { type: 'array', items: { type: 'string' }, example: ['Almuerzo', 'Almacén'] },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
       '/expenses/{id}': {
         put: {
           tags: ['Gastos'],

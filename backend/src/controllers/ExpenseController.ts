@@ -3,14 +3,12 @@ import { ExpenseService } from '../services/ExpenseService';
 import { createExpenseSchema, updateExpenseSchema, filterByMonthSchema } from '../schemas/expenseSchema';
 import { AppError } from '../errors';
 import { ExpenseFilterContext } from '../patterns/strategy/ExpenseFilterContext';
-import { AutocompleteTrie } from '../structures/Trie';
 import { FilterByMonthStrategy } from '../patterns/strategy/FilterByMonthStrategy';
 
 export class ExpenseController {
   constructor(
     private readonly expenseService: ExpenseService,
-    private readonly filterContext: ExpenseFilterContext,
-    private readonly autocompleteTrie: AutocompleteTrie
+    private readonly filterContext: ExpenseFilterContext
   ) { }
 
   getAll = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -38,16 +36,6 @@ export class ExpenseController {
     } catch (error) { next(error); }
   };
 
-  /**
-   * Nuevo endpoint O(m) de Búsqueda con Autocompletado (Trie)
-   */
-  suggestTitles = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-      const query = req.query['q'] as string || '';
-      const suggestions = this.autocompleteTrie.suggest(query);
-      res.status(200).json({ status: 'success', data: suggestions });
-    } catch (error) { next(error); }
-  };
 
   create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {

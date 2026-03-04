@@ -2,7 +2,6 @@ import { IExpense, CreateExpenseDTO, UpdateExpenseDTO } from '../models/Expense'
 import { IExpenseRepository } from '../repository/interfaces/IExpenseRepository';
 import { NotFoundError } from '../errors/NotFoundError';
 import { ExpenseSubject } from '../patterns/observer/ExpenseSubject';
-import { AutocompleteTrie } from '../structures/Trie';
 
 /**
  * Servicio de lógica de negocio para gastos.
@@ -11,8 +10,7 @@ import { AutocompleteTrie } from '../structures/Trie';
 export class ExpenseService {
   constructor(
     private readonly expenseRepository: IExpenseRepository,
-    private readonly expenseSubject: ExpenseSubject,
-    private readonly autocompleteTrie: AutocompleteTrie
+    private readonly expenseSubject: ExpenseSubject
   ) { }
 
   async getAllExpenses(userId: string): Promise<IExpense[]> {
@@ -28,9 +26,6 @@ export class ExpenseService {
 
     // Notificar observers (ej. alerta de alta prioridad)
     this.expenseSubject.notify(expense);
-
-    // Registrar el título en el Trie para autocompletado
-    this.autocompleteTrie.insert(expense.title);
 
     return expense;
   }

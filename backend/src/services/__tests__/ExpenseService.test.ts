@@ -1,7 +1,6 @@
 import { ExpenseService } from '../ExpenseService';
 import { IExpenseRepository } from '../../repository/interfaces/IExpenseRepository';
 import { ExpenseSubject } from '../../patterns/observer/ExpenseSubject';
-import { AutocompleteTrie } from '../../structures/Trie';
 import { IExpense, CreateExpenseDTO } from '../../models/Expense';
 import { NotFoundError } from '../../errors/NotFoundError';
 
@@ -22,10 +21,6 @@ const mockSubject: jest.Mocked<ExpenseSubject> = {
   notify: jest.fn(),
 } as any;
 
-const mockTrie: jest.Mocked<AutocompleteTrie> = {
-  insert: jest.fn(),
-  suggest: jest.fn(),
-} as any;
 
 // Fixture de prueba
 
@@ -51,11 +46,11 @@ describe('ExpenseService', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    expenseService = new ExpenseService(mockRepository, mockSubject, mockTrie);
+    expenseService = new ExpenseService(mockRepository, mockSubject);
   });
 
   describe('createExpense', () => {
-    it('should persist the expense, notify observers and update the Trie', async () => {
+    it('should persist the expense and notify observers', async () => {
       const dto: CreateExpenseDTO = {
         title: 'Cena de negocios',
         amount: 150,
@@ -71,7 +66,6 @@ describe('ExpenseService', () => {
 
       expect(mockRepository.create).toHaveBeenCalledWith('user-1', dto);
       expect(mockSubject.notify).toHaveBeenCalledWith(mockExpense);
-      expect(mockTrie.insert).toHaveBeenCalledWith(mockExpense.title);
       expect(result).toEqual(mockExpense);
     });
   });
