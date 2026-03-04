@@ -1,23 +1,20 @@
 import express, { Application, Router } from 'express';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
-import { errorHandler } from './middlewares';
 import { swaggerSpec } from './swagger';
 
-import { RepositoryFactory } from './data/ExpenseRepositoryFactory';
-
+import { errorHandler } from './middlewares';
+import { RepositoryFactory } from './data';
 import { AuthService } from './services/AuthService';
 import { ExpenseService } from './services/ExpenseService';
-import { AuthController } from './controllers/AuthController';
-import { ExpenseController } from './controllers/ExpenseController';
+import { AuthController, ExpenseController } from './controllers';
+import { createAuthRoutes, createExpenseRoutes } from './routes';
 
 import { CacheExpenseProxy } from './patterns/proxy/CacheExpenseProxy';
 import { ExpenseSubject } from './patterns/observer/ExpenseSubject';
 import { HighPriorityAlertObserver } from './patterns/observer/HighPriorityAlertObserver';
-import { ExpenseFilterContext } from './patterns/strategy/ExpenseFilterContext';
-import { createAuthRoutes } from './routes/authRoutes';
-import { createExpenseRoutes } from './routes/expenseRoutes';
 import { WhatsAppObserver } from './patterns/observer/WhatsAppObserver';
+import { ExpenseFilterContext } from './patterns/strategy/ExpenseFilterContext';
 
 /**
  * Configura y retorna la aplicación Express con todos los middlewares,

@@ -28,7 +28,6 @@ export class ExpenseController {
       const { year, month } = validation.data;
       const expenses = await this.expenseService.getExpensesByMonth(userId, year, month);
 
-      // Usar Strategy Pattern opcionalmente para double-check en memoria o reportes combinados
       this.filterContext.setStrategy(new FilterByMonthStrategy(year, month));
       const filteredInMemory = this.filterContext.filter(expenses);
 
